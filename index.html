@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estudio — Dirección de arte</title>
+<meta name="description" content="Dirección de arte y sistemas visuales — Rosario, Argentina.">
+<meta name="theme-color" content="#050505">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Estudio — Dirección de arte">
+<meta property="og:description" content="Dirección de arte y sistemas visuales.">
+<meta property="og:image" content="https://raw.githubusercontent.com/graficojordan/portfolio-data/main/cuyaci-0.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Piazzolla:ital,opsz,wght@0,8..30,300;0,8..30,400;1,8..30,300;1,8..30,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#050505; --ink:#ece9e2; --mute:#86837c; --faint:#3a3935; --line:rgba(236,233,226,.14);
+  --pad:clamp(16px,4vw,48px);
+  --sans:'Space Grotesk',system-ui,sans-serif; --serif:'Piazzolla',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+img{display:block;max-width:100%}
+::selection{background:var(--ink);color:var(--bg)}
+.lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ---------- Barra fija ---------- */
+.bar{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;justify-content:space-between;align-items:flex-start;
+  padding:calc(env(safe-area-inset-top,0px) + 20px) var(--pad) 0;pointer-events:none;mix-blend-mode:difference;color:#fff}
+.bar>*{pointer-events:auto}
+.mini{height:24px;width:auto;fill:currentColor;display:block;opacity:0;transform:translateY(-6px);transition:opacity .6s,transform .6s}
+.bar.show .mini{opacity:1;transform:none}
+.bar nav{display:flex;gap:18px;text-align:right}
+.bar nav a{font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.9}
+
+/* ---------- Portada: el sello como ventana ---------- */
+.hero{min-height:100svh;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 72px) var(--pad) calc(env(safe-area-inset-bottom,0px) + 24px)}
+.hero-top{display:flex;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:28px 0}
+.frame{position:relative;height:min(62svh,calc((100vw - 2*var(--pad) - 28px)*703/540));aspect-ratio:540/703}
+.sello{width:100%;height:100%;display:block;overflow:visible}
+
+/* Efecto enriquecido en el carrusel del isologo */
+.sello image {
+  opacity: 0;
+  filter: blur(8px) contrast(1.1);
+  transform: scale(1.12);
+  transform-origin: 270px 351px; /* Centro del viewBox 540x703 */
+  transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1),
+              filter 1.8s cubic-bezier(0.25, 1, 0.5, 1),
+              transform 6.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.sello image.on {
+  opacity: 1;
+  filter: blur(0px) contrast(1);
+  transform: scale(1);
+}
+
+.crop,.reg{position:absolute;pointer-events:none}
+.crop{inset:-14px;--c:var(--mute);
+  background:
+   linear-gradient(var(--c),var(--c)) 0 14px/9px 1px no-repeat,
+   linear-gradient(var(--c),var(--c)) 14px 0/1px 9px no-repeat,
+   linear-gradient(var(--c),var(--c)) 100% 14px/9px 1px no-repeat,
+   linear-gradient(var(--c),var(--c)) calc(100% - 14px) 0/1px 9px no-repeat,
+   linear-gradient(var(--c),var(--c)) 0 calc(100% - 14px)/9px 1px no-repeat,
+   linear-gradient(var(--c),var(--c)) 14px 100%/1px 9px no-repeat,
+   linear-gradient(var(--c),var(--c)) 100% calc(100% - 14px)/9px 1px no-repeat,
+   linear-gradient(var(--c),var(--c)) calc(100% - 14px) 100%/1px 9px no-repeat}
+.reg{right:-34px;top:50%;width:13px;height:13px;border:1px solid var(--mute);border-radius:50%;transform:translateY(-50%)}
+.reg::before,.reg::after{content:"";position:absolute;background:var(--mute)}
+.reg::before{left:50%;top:-4px;bottom:-4px;width:1px}
+.reg::after{top:50%;left:-4px;right:-4px;height:1px}
+@media(max-width:520px){.reg{display:none}}
+.hero-foot{display:flex;justify-content:space-between;align-items:flex-end;padding-top:14px;border-top:1px solid var(--line)}
+.who{font-size:clamp(20px,3.2vw,30px);font-weight:500;letter-spacing:-.02em;line-height:1.1}
+.who small{display:block;margin-top:6px;font-family:var(--serif);font-style:italic;font-weight:300;font-size:15px;color:var(--mute);letter-spacing:0}
+.cue{display:flex;gap:8px;align-items:center}
+.cue svg{width:14px;height:14px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(4px)}}
+
+/* ---------- Repositorio ---------- */
+main{padding:0 var(--pad)}
+.sec{padding-top:clamp(64px,10vw,140px)}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:clamp(28px,4vw,48px)}
+.sec-h h2{font-size:clamp(30px,7vw,76px);font-weight:500;letter-spacing:-.04em;line-height:.95;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:1fr;gap:44px;padding:0 10px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:56px 40px}}
+@media(min-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+.plate{display:block;width:100%;text-align:left;position:relative}
+.img{position:relative;aspect-ratio:4/5;background:#0d0d0d;overflow:hidden}
+.plate .crop{inset:-10px;z-index:2;--c:var(--faint);transition:--c .3s;
+  background:
+   linear-gradient(var(--c),var(--c)) 0 10px/7px 1px no-repeat,linear-gradient(var(--c),var(--c)) 10px 0/1px 7px no-repeat,
+   linear-gradient(var(--c),var(--c)) 100% 10px/7px 1px no-repeat,linear-gradient(var(--c),var(--c)) calc(100% - 10px) 0/1px 7px no-repeat,
+   linear-gradient(var(--c),var(--c)) 0 calc(100% - 10px)/7px 1px no-repeat,linear-gradient(var(--c),var(--c)) 10px 100%/1px 7px no-repeat,
+   linear-gradient(var(--c),var(--c)) 100% calc(100% - 10px)/7px 1px no-repeat,linear-gradient(var(--c),var(--c)) calc(100% - 10px) 100%/1px 7px no-repeat}
+
+.plate img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transform:scale(1.001);transition:filter .8s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+
+/* Ajuste quirúrgico de hover y scroll */
+@media(hover:none) {
+  .plate.on .crop { --c:var(--ink) }
+  .plate.on img { filter:none }
+}
+@media(hover:hover) {
+  .plate:hover .crop { --c:var(--ink) }
+  .plate:hover img { filter:none; transform:scale(1.04) }
+  .plate:hover .arr { opacity:1; transform:translate(2px,-2px) }
+}
+
+.cap{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;padding-top:16px}
+.cap h3{font-size:clamp(18px,2.2vw,24px);font-weight:500;letter-spacing:-.02em;text-transform:uppercase}
+.cap .arr{width:16px;height:16px;opacity:.5;transition:opacity .3s,transform .3s}
+.cap .kind{grid-column:1 / -1}
+
+/* ---------- Música ---------- */
+.list{border-top:1px solid var(--line)}
+.row{border-bottom:1px solid var(--line)}
+.row>button{width:100%;display:grid;grid-template-columns:1fr auto;gap:4px 14px;align-items:baseline;padding:20px 0;text-align:left}
+.row h3{grid-column:1;font-size:clamp(18px,2.4vw,26px);font-weight:500;letter-spacing:-.02em}
+.row .role{grid-column:2;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);text-align:right}
+.row .kind{grid-column:1 / -1;font-family:var(--serif);font-style:italic;font-weight:300;font-size:15px;color:var(--mute)}
+@media(min-width:700px){
+  .row>button{grid-template-columns:1fr auto auto}
+  .row .kind{grid-column:2}
+  .row .role{grid-column:3}
+}
+.row>button:hover h3{opacity:.7}
+.slot{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.2,.7,.2,1)}
+.row.open .slot{grid-template-rows:1fr}
+.slot>div{overflow:hidden}
+.media{padding:4px 0 28px;max-width:880px}
+.video{position:relative;aspect-ratio:16/9;background:#0d0d0d}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.zoom{display:block;width:100%;max-width:520px}
+.zoom img{width:100%;height:auto}
+
+/* ---------- Contacto ---------- */
+footer{margin-top:clamp(80px,12vw,180px);padding:0 var(--pad) calc(env(safe-area-inset-bottom,0px) + 28px)}
+.mail{display:block;margin:20px 0 clamp(48px,7vw,96px);font-size:clamp(32px,10.4vw,128px);font-weight:500;letter-spacing:-.045em;line-height:.92;text-transform:uppercase;transition:opacity .3s}
+.mail:hover{opacity:.55}
+.links{display:flex;flex-wrap:wrap;gap:12px 32px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.links a{display:inline-flex;gap:6px;align-items:center;font-size:13px}
+.links a svg{width:12px;height:12px}
+.links a:hover{opacity:.55}
+.end{display:flex;justify-content:space-between;align-items:flex-end;padding-top:20px}
+.end .mini{opacity:.9;transform:none;height:34px}
+
+/* ---------- Capas (ficha de proyecto / lightbox) ---------- */
+.layer{position:fixed;inset:0;z-index:100;background:var(--bg);overflow-y:auto;overscroll-behavior:contain;
+  opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .4s,transform .4s,visibility 0s .4s}
+.layer.open{opacity:1;visibility:visible;transform:none;transition:opacity .4s,transform .4s}
+.layer-bar{position:sticky;top:0;z-index:3;display:flex;justify-content:flex-end;align-items:center;
+  padding:calc(env(safe-area-inset-top,0px) + 18px) var(--pad) 14px;mix-blend-mode:difference;color:#fff}
+.layer-bar button{font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.head{padding:clamp(24px,5vw,64px) var(--pad) clamp(28px,4vw,48px)}
+.head h2{font-size:clamp(40px,11vw,150px);font-weight:500;letter-spacing:-.05em;line-height:.88;text-transform:uppercase;margin:12px 0 14px}
+.layer img.full{width:100%;height:auto}
+.prose{padding:clamp(56px,10vw,128px) var(--pad);display:flex;justify-content:center}
+.prose div{max-width:58ch;font-family:var(--serif);font-weight:300;font-size:clamp(17px,2vw,21px);line-height:1.75;color:#cfccc4}
+.prose p+p{margin-top:1.3em}
+.prose strong{font-weight:400;color:var(--ink)}
+.layer video{width:100%;height:auto;display:block}
+.stack{display:flex;flex-direction:column;gap:clamp(8px,1.5vw,20px);padding-bottom:clamp(56px,8vw,96px)}
+.layer-end{display:flex;flex-direction:column;align-items:center;gap:22px;padding:0 var(--pad) calc(env(safe-area-inset-bottom,0px) + 80px)}
+.layer-end a,.layer-end button{font-size:11px;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:4px}
+.layer-end button{color:var(--mute)}
+#lightbox{display:flex;align-items:center;justify-content:center;padding:var(--pad)}
+#lightbox img{max-width:100%;max-height:calc(100svh - 120px);object-fit:contain}
+
+/* ---------- Reveal ---------- */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}.rv{opacity:1;transform:none;transition:none}
+  .cue svg{animation:none}.sello image{transition:none}
+}
+:focus-visible{outline:1px solid var(--ink);outline-offset:4px}
+</style>
+</head>
+<body>
+
+<svg class="defs" aria-hidden="true"><defs><path id="m" d="M495.72 421.56C466.78 395.64 424.87 382.67 370 382.67H245.98V256.86H468.75V212.05H357.53V40.48L498.58 40.43V101.4H539.14V0H130.77V101.4H171.33V40.42H312.77V212.05H201.54V382.67H43.8V326.79H0V524.63H43.8V431H370C406.75 431 436.83 438.81 460.23 454.41C483.64 470.02 495.34 497.96 495.34 538.23C495.34 578.5 483.64 606.7 460.23 625.82C436.82 644.96 406.75 654.51 370 654.51H333V702.84H370C424.87 702.84 466.78 688.12 495.72 658.67C524.67 629.22 539.14 589.33 539.14 538.99C539.14 488.65 524.67 447.51 495.72 421.57V421.56Z"/></defs></svg>
+
+<div class="bar" id="bar">
+  <a href="#top" aria-label="Inicio"><svg class="mini" viewBox="0 0 540 703"><use href="#m"/></svg></a>
+  <nav><a href="#obra">Obra</a><a href="#musica">Música</a><a href="#contacto">Contacto</a></nav>
+</div>
+
+<header class="hero" id="top">
+  <div class="hero-top lbl"><span>Estudio</span><span>Rosario, AR</span></div>
+
+  <div class="stage">
+    <div class="frame" id="frame">
+      <svg class="sello" viewBox="0 0 540 703" role="img" aria-label="Sello">
+        <defs><clipPath id="clip"><use href="#m"/></clipPath></defs>
+        <use href="#m" fill="#121212"/>
+        <g clip-path="url(#clip)" id="covers"></g>
+        <use href="#m" fill="none" stroke="rgba(236,233,226,.38)" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <span class="crop"></span><span class="reg"></span>
+    </div>
+  </div>
+
+  <div class="hero-foot">
+    <div class="who">Dirección de arte<small>Sistemas visuales</small></div>
+    <a class="cue lbl" href="#obra"><span>Obra</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></a>
+  </div>
+</header>
+
+<main id="obra"></main>
+
+<footer id="contacto">
+  <p class="lbl">Contacto</p>
+  <a class="mail" href="mailto:graficojordan@gmail.com">graficojordan<br>@gmail.com</a>
+  <div class="links">
+    <a href="https://www.behance.net/trinch" target="_blank" rel="noopener noreferrer">Behance <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+    <a href="mailto:graficojordan@gmail.com">Email</a>
+  </div>
+  <div class="end lbl"><span>© 2026 — Rosario, AR</span><svg class="mini" viewBox="0 0 540 703" aria-hidden="true"><use href="#m"/></svg></div>
+</footer>
+
+<!-- Ficha de proyecto -->
+<div class="layer" id="project" role="dialog" aria-modal="true" aria-label="Proyecto">
+  <div class="layer-bar"><button id="p-close">[ Cerrar ]</button></div>
+  <div id="p-body"></div>
+</div>
+
+<!-- Lightbox -->
+<div class="layer" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+  <div class="layer-bar" style="position:fixed;inset:0 0 auto 0;width:100%"><button id="l-close">[ Cerrar ]</button></div>
+  <img id="l-img" alt="">
+</div>
+
+<script>
+const RAW='https://raw.githubusercontent.com/graficojordan/portfolio-data/main/';
+const ARR='<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
+
+const GROUPS=[
+ {name:'Branding',items:[
+  {title:'Cuyací',kind:'Identidad / Packaging',cover:'cuyaci-0.jpg',
+   link:'https://www.behance.net/gallery/233285105/Cuyaci-Diseno-de-packaging',
+   text:`<p>Con <strong>Cuyací</strong>, el desafío fue proyectar un sistema de packaging que dialogue con la raíz <em>sin anclarse en el pasado</em>, traduciendo lo ancestral a una escala&nbsp;masiva.</p>
+         <p>El eje del proyecto es una identidad de impronta manual desarrollada a partir de grabados en madera, que aportan la crudeza y el gesto orgánico que el producto&nbsp;exigía.</p>
+         <p>Buscamos una armonía sistémica abierta donde cada pieza conserva su singularidad y combina narrativas que desbordan el envase a través de experiencias&nbsp;audiovisuales.</p>`,
+   video:'CUYACI_FN.mp4',
+   images:['cuyaci-1.jpg','cuyaci-2.jpg','cuyaci-4.jpg','cuyaci-5.jpg','cuyaci-6.jpg','cuyaci-7.jpg']},
+  {title:'Mangia Fresco',kind:'Identidad / Manual de marca',cover:'mangia-0.jpg',
+   link:'https://www.behance.net/gallery/192867745/Mangia-Fresco-Manual-de-marca',
+   text:`<p><strong>Mangia Fresco</strong> es una fábrica de pastas boutique en el corazón de Barrio&nbsp;Martin.</p>
+         <p>El proyecto consistió en transformar la imagen clásica del rubro en una estética depurada de elementos&nbsp;invasivos.</p>
+         <p>La lógica del sistema fue diseñada para mezclar lo tradicional y lo premium, apuntando a un target que valora los detalles curados del mundo gastro de especialidad y la jerarquía de la producción&nbsp;nacional.</p>`,
+   images:['mangia-1.jpg','mangia-2.jpg','mangia-3.jpg','mangia-4.jpg','mangia-5.jpg','mangia-6.jpg']}
+ ]},
+ {name:'Web',items:[
+  {title:'Forbice Construcciones',kind:'Web / Corporativo',cover:'web-forbice.jpg',ext:'https://forbice.github.io/web/'},
+  {title:'Labcell',kind:'RRSS / Corporativo',cover:'web-labcell.jpg',ext:'https://www.behance.net/gallery/192872247/Labcell-Identidad'}
+ ]},
+ {name:'Otros',items:[
+  {title:'Ghettos',kind:'Diseño de vinilo',cover:'arte-ghettos.jpg',ext:'https://www.behance.net/gallery/232421181/Album-vinilo-LP-Portatiles-Steady-Club'},
+  {title:'Tapas de discos',kind:'Sistemas visuales',cover:'arte-tapas.jpg',ext:'https://www.behance.net/gallery/213669553/Diseno-de-sistemas-Tapas-de-discos'},
+  {title:'Cosquín Rock',kind:'Diseño de información',cover:'arte-cosquin.jpg',ext:'https://www.behance.net/gallery/212012521/Cosquin-Rock-Diseno-de-informacion'}
+ ]}
+];
+const MUSIC=[
+ {title:'Diablo A Go-Go',kind:'Videoclip — Portátiles Steady Club',role:'Dirección de arte',youtube:'r6FXuq9KurA'},
+ {title:'Sun Comes Down',kind:'Videoclip — ZG',role:'Grabación y producción',youtube:'2_Ysm0kMSGY'},
+ {title:'Dualidad',kind:'Álbum — ZG',role:'Arte de tapa',image:'tapa-dualidad.jpg'},
+ {title:'Debut',kind:'EP — ZG',role:'Arte de tapa',image:'tapa-debut.jpg'}
+];
+
+const $=(s,r=document)=>r.querySelector(s);
+
+/* ====== PORTADA: el sello como ventana a la obra ====== */
+const covers=GROUPS.flatMap(g=>g.items.map(i=>i.cover)).slice(0,6);
+const cg=$('#covers'); const NS='http://www.w3.org/2000/svg';
+covers.forEach((c,i)=>{
+  const im=document.createElementNS(NS,'image');
+  im.setAttribute('href',RAW+c); im.setAttribute('width','540'); im.setAttribute('height','703');
+  im.setAttribute('preserveAspectRatio','xMidYMid slice');
+  if(i===0) im.classList.add('on');
+  cg.appendChild(im);
+});
+let ci=0; const ims=[...cg.children];
+if(ims.length>1 && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+  setInterval(()=>{ if(document.hidden) return; ims[ci].classList.remove('on'); ci=(ci+1)%ims.length; ims[ci].classList.add('on'); },4200);
+}
+
+/* ====== REPOSITORIO ====== */
+const main=$('#obra'); const projects=[];
+GROUPS.forEach(g=>{
+  const sec=document.createElement('section'); sec.className='sec';
+  sec.innerHTML=`<div class="sec-h rv"><h2>${g.name}</h2></div><div class="grid"></div>`;
+  const grid=$('.grid',sec);
+  g.items.forEach(p=>{
+    const idx=projects.push(p)-1;
+    const el=document.createElement(p.ext?'a':'button'); el.className='plate rv';
+    if(p.ext){el.href=p.ext;el.target='_blank';el.rel='noopener noreferrer';}
+    else el.addEventListener('click',()=>openProject(idx));
+    el.innerHTML=`<div class="img"><img src="${RAW+p.cover}" alt="${p.title}" loading="lazy"><span class="crop"></span></div>
+      <div class="cap"><h3>${p.title}</h3>${ARR}<span class="kind lbl">${p.kind}</span></div>`;
+    grid.appendChild(el);
+  });
+  main.appendChild(sec);
+});
+
+/* Música */
+const ms=document.createElement('section'); ms.className='sec'; ms.id='musica';
+ms.innerHTML=`<div class="sec-h rv"><h2>Música</h2></div><div class="list"></div>`;
+const list=$('.list',ms);
+MUSIC.forEach((m,i)=>{
+  const row=document.createElement('div'); row.className='row rv';
+  row.innerHTML=`<button aria-expanded="false"><h3>${m.title}</h3><span class="role">${m.role}</span><span class="kind">${m.kind}</span></button>
+    <div class="slot"><div><div class="media"></div></div></div>`;
+  const btn=$('button',row), media=$('.media',row);
+  btn.addEventListener('click',()=>{
+    const open=row.classList.contains('open');
+    document.querySelectorAll('.row.open').forEach(r=>{r.classList.remove('open');$('button',r).setAttribute('aria-expanded','false');setTimeout(()=>{if(!r.classList.contains('open'))$('.media',r).innerHTML='';},500);});
+    if(open) return;
+    media.innerHTML = m.youtube
+      ? `<div class="video"><iframe src="https://www.youtube.com/embed/${m.youtube}" title="${m.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`
+      : `<button class="zoom" aria-label="Ampliar ${m.title}"><img src="${RAW+m.image}" alt="${m.title}"></button>`;
+    const z=$('.zoom',media); if(z) z.addEventListener('click',()=>openLightbox(RAW+m.image,m.title));
+    row.classList.add('open'); btn.setAttribute('aria-expanded','true');
+  });
+  list.appendChild(row);
+});
+main.appendChild(ms);
+
+/* ====== FICHA DE PROYECTO ====== */
+const layerP=$('#project'), body=$('#p-body'), layerL=$('#lightbox');
+let current=null, lastFocus=null;
+function lock(on){document.documentElement.style.overflow=on?'hidden':'';}
+function openProject(i){
+  const p=projects[i]; lastFocus=document.activeElement;
+  body.innerHTML=`
+   <div class="head"><p class="lbl">${p.kind}</p><h2>${p.title}</h2></div>
+   <img class="full" src="${RAW+p.images[0]}" alt="${p.title}">
+   <div class="prose"><div>${p.text}</div></div>
+   ${p.video?`<video src="${RAW+p.video}" autoplay loop muted playsinline controls preload="metadata"></video><div style="height:clamp(56px,8vw,96px)"></div>`:''}
+   <div class="stack">${p.images.slice(1).map((s,k)=>`<img class="full" src="${RAW+s}" alt="${p.title}${k+2}" loading="lazy">`).join('')}</div>
+   <div class="layer-end">${p.link?`<a href="${p.link}" target="_blank" rel="noopener noreferrer">Ver en Behance ↗</a>`:''}<button id="p-back">Volver</button></div>`;
+  $('#p-back').addEventListener('click',()=>closeLayers());
+  layerP.scrollTop=0; layerP.classList.add('open'); lock(true); current='project';
+  history.pushState({layer:1},''); $('#p-close').focus({preventScroll:true});
+}
+function openLightbox(src,alt){
+  lastFocus=document.activeElement; $('#l-img').src=src; $('#l-img').alt=alt||'';
+  layerL.classList.add('open'); lock(true); current='lightbox';
+  history.pushState({layer:1},''); $('#l-close').focus({preventScroll:true});
+}
+function hideLayers(){
+  layerP.classList.remove('open'); layerL.classList.remove('open'); lock(false); current=null;
+  setTimeout(()=>{ if(!current) body.innerHTML=''; },450);
+  if(lastFocus) lastFocus.focus({preventScroll:true});
+}
+function closeLayers(){ if(history.state&&history.state.layer) history.back(); else hideLayers(); }
+window.addEventListener('popstate',()=>{ if(current) hideLayers(); });
+$('#p-close').addEventListener('click',closeLayers);
+$('#l-close').addEventListener('click',closeLayers);
+layerL.addEventListener('click',e=>{ if(e.target===layerL||e.target.id==='l-img') closeLayers(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&current) closeLayers(); });
+
+/* ====== Observadores ====== */
+const bar=$('#bar');
+new IntersectionObserver(([e])=>bar.classList.toggle('show',!e.isIntersecting),{threshold:.15}).observe($('#frame'));
+const rvObs=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');rvObs.unobserve(e.target);} }),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+
+/* Placa "encendida" (color) cuando cruza el centro de la pantalla */
+const plObs=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('on',e.isIntersecting)),{rootMargin:'-38% 0px -38% 0px'});
+document.querySelectorAll('.plate').forEach(el=>plObs.observe(el));
+</script>
+</body>
+</html>
